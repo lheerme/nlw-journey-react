@@ -5,9 +5,11 @@ import { Button } from '../../components/button';
 
 interface ConfirmTripDialogContentProps {
   createTrip: (event: FormEvent<HTMLFormElement>) => void
+  setOwnerName: (name: string) => void
+  setOwnerEmail: (email: string) => void
 }
 
-export function ConfirmTripDialogContent({ createTrip }: ConfirmTripDialogContentProps) {
+export function ConfirmTripDialogContent({ createTrip, setOwnerName, setOwnerEmail }: ConfirmTripDialogContentProps) {
   return (
     <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
       <div className="space-y-2">
@@ -35,6 +37,7 @@ export function ConfirmTripDialogContent({ createTrip }: ConfirmTripDialogConten
             name="name" 
             placeholder="Seu nome completo" 
             className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+            onChange={(event) => setOwnerName(event.target.value)}
           />
         </div>
 
@@ -44,7 +47,9 @@ export function ConfirmTripDialogContent({ createTrip }: ConfirmTripDialogConten
             type="email" 
             name="email" 
             placeholder="Seu e-mail pessoal" 
-            className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1" />
+            className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
+            onChange={(event) => setOwnerEmail(event.target.value)}
+          />
         </div>
 
         <Button variant="primary" size="full" type="submit">

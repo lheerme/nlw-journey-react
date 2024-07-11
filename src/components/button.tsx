@@ -23,6 +23,6 @@ interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof butt
 
 export function Button(props: ButtonProps) {
   return (
-    <button {...props} type="button" className={buttonVariants({ variant: props.variant, size: props.size })} />
+    <button {...props} className={buttonVariants({ variant: props.variant, size: props.size })} />
   )
 }

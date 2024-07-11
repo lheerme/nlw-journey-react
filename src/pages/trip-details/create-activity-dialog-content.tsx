@@ -1,8 +1,30 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { Calendar, Tag, X } from 'lucide-react';
 import { Button } from '../../components/button';
+import { FormEvent } from 'react';
+import { useParams } from 'react-router-dom';
+import { api } from '../../lib/axios';
 
 export function CreateActivityDialogContent() {
+  const { tripId } = useParams()
+
+  async function createActivity(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const data = new FormData(event.currentTarget)
+
+    const title = String(data.get('title'))
+    const occurs_at = String(data.get('occurs_at'))
+    
+    await api.post(`/trips/${tripId}/activities`, {
+      title,
+      occurs_at,
+      tripId
+    })
+
+    window.document.location.reload()
+  }
+
   return (
     <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[540px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
       <div className="space-y-2">
@@ -22,11 +44,11 @@ export function CreateActivityDialogContent() {
         </Dialog.Description>
       </div>
 
-      <form className="space-y-3">
+      <form onSubmit={createActivity} className="space-y-3">
         <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
           <Tag className="size-5 text-zinc-400" />
           <input 
-            name="title" 
+            name="title"
             placeholder="Qual a atividade" 
             className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
           />
